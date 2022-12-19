@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <Title>Calculator</title>
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+    <script language="JavaScript" src="./script.js" type="text/javascript"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <div class="calculator">
+        <h1 class="title">Calculator</h1>
+        <p class="history" id="history"></p>
+        <p id="input" class="box">0</p>
+        <div class="row">
+            <button class="button">^</button>
+            <button class="button">(</button>
+            <button class="button">)</button>
+            <button class="button" onclick="clear_entry()">CE</button>
+            <button class="button" onclick="clear()">C</button>
+            <button class="button backspace_btn" id="backspace_btn" onclick="backspace()"></button>
+
+        </div>
+        <div class="row">
+            <button class="button">sin</button>
+            <button class="button" onclick="square_root()">√𝑥</button>
+            <button class="button" onclick="button_number(7)">7</button>
+            <button class="button" onclick="button_number(8)">8</button>
+            <button class="button" onclick="button_number(9)">9</button>
+            <button class="button operator" onclick="button_number('/')">÷</button>
+        </div>
+        <div class="row">
+            <button class="button">cos</button>
+            <button class="button" onclick="power_of()">𝑥²</button>
+            <button class="button" onclick="button_number(4)">4</button>
+            <button class="button" onclick="button_number(5)">5</button>
+            <button class="button" onclick="button_number(6)">6</button>
+            <button class="button operator" onclick="button_number('*')">×</button>
+        </div>
+        <div class="row">
+            <button class="button">tan</button>
+            <button class="button" onclick="percentage()">%</button>
+            <button class="button" onclick="button_number(1)">1</button>
+            <button class="button" onclick="button_number(2)">2</button>
+            <button class="button" onclick="button_number(3)">3</button>
+            <button class="button operator" onclick="button_number('-')">-</button>
+        </div>
+        <div class="row">
+            <button class="button" onclick="button_value(3.1415)">pi</button>
+            <button class="button" onclick="button_value(2.7182)">e</button>
+            <button class="button" onclick="button_number(0)">0</button>
+            <button class="button" id="dot" value="." onclick="button_number('.')">.</button>
+            <button class="button" value="=" class="operator" id="equal_sign" onclick="button_number('=')">=</button>
+            <button class="button operator" onclick="button_number('+')">+</button>
+        </div>
+    </div>
+</body>
+
+</html>
