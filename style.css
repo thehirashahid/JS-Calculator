@@ -84,3 +84,8 @@ body {
 .operator:hover {
     background-color: #ffd11a;
 }
+
+.equal_sign {
+    width: 22.9%;
+    border-radius: 15px;
+}

@@ -44,7 +44,7 @@ function calculate(num1, num2, operator) {
 }
 
 //////////////// clear ////////////////////
-function clear() {
+function clear_button() {
     window.location.reload()
 }
 
@@ -60,43 +60,58 @@ function backspace() {
     }
 }
 
+//////////////// Exponential ////////////////////
+function exponential_button() {
+    input = document.getElementById("input");
+    let result = Math.exp(input.innerText);
+    result = result.toPrecision(4);
+    input.innerText = result
+    numbers.push(result);
+}
+
+//////////////// sin ////////////////////
+function sin_button() {
+    input = document.getElementById("input");
+    let result = Math.sin(input.innerText);
+    result = result.toPrecision(4);
+    input.innerText = result
+    numbers.push(result);
+}
+
+//////////////// cos ////////////////////
+function cos_button() {
+    input = document.getElementById("input");
+    let result = Math.cos(input.innerText);
+    result = result.toPrecision(4);
+    input.innerText = result
+    numbers.push(result);
+}
+
+//////////////// sin ////////////////////
+function tan_button() {
+    input = document.getElementById("input");
+    let result = Math.tan(input.innerText);
+    result = result.toPrecision(4);
+    input.innerText = result
+    numbers.push(result);
+}
+
 //////////////// Square-Root ////////////////////
 function square_root() {
     input = document.getElementById("input");
-    input.innerText = Math.sqrt(input.innerText)
-    numbers.push(Math.sqrt(input.innerText))
+    let result = Math.sqrt(input.innerText);
+    result = result.toPrecision(4);
+    input.innerText = result
+    numbers.push(result);
 }
 
 //////////////// Power-Of ////////////////////
 function power_of() {
     input = document.getElementById("input");
-    input.innerText = Math.pow(input.innerText, 2)
-    numbers.push(Math.pow(input.innerText, 2))
-}
-
-//////////////// Percentage ////////////////////
-function percentage() {
-    var elements = document.getElementsByClassName("operator");
-    input = document.getElementById("input");
-
-    if (numbers.length > 0 && typeof last_operator != "undefined") {
-        if (last_operator == "+" || last_operator == "-") {
-            input.innerText = numbers * input.innerText / 100
-        }
-        else {
-            input.innerText = input.innerText / 100
-        }
-    }
-    else {
-        input.innerText = input.innerText / 100
-    }
-    numbers = []
-    numbers.push(input.innerText)
-
-    // deselect operator if any selected
-    for (var i = 0; i < elements.length; i++) {
-        elements[i].style.backgroundColor = "#e68a00";
-    }
+    let result = Math.pow(input.innerText);
+    result = result.toPrecision(4);
+    input.innerText = result
+    numbers.push(result);
 }
 
 ////////////////////////// Clear-Entry ///////////////////////
@@ -113,14 +128,16 @@ function clear_entry() {
 function button_number(button) {
     operator = document.getElementsByClassName("operator");
     input = document.getElementById("input");
+    newOp = document.getElementById("newOp").value;
     history = document.getElementById("history");
     equal = document.getElementById("equal_sign").value;
     dot = document.getElementById("dot").value;
 
     last_button = button;
 
+
     // if button is not an operator or = sign
-    if (!operators.includes(button) && button != equal) {
+    if (!operators.includes(button) && button != equal && button != newOp) {
         // if it is the first button clicked
         if (firstNum) {
             // and it's a dot, show 0.
@@ -162,8 +179,14 @@ function button_number(button) {
     }
     // if it's an operator or = sign
     else {
+        // return if newOp pressed at first
+        if (input.innerText == 0 && button == newOp) {
+            alert('Nothing has been calculated');
+            return
+        }
         // return if operator is already pressed
         if (operator_value != null && button == operator_value) {
+            alert('Operator is already pressed');
             return
         }
         // show minus sign if it's the first value selected and finally return
@@ -175,10 +198,12 @@ function button_number(button) {
         }
         // return if minus operator pressed and it's already printed on screen 
         else if (operators.includes(button) && input.innerText == "-") {
+            alert('Operator is already pressed');
             return
         }
         // return if minus operator pressed and history already has equal sign
         else if (button == "-" && operator_value == "-" && history.innerText.includes("=")) {
+            alert('Expression has been calculated');
             return
         }
         // set value of operator if it's one
@@ -241,61 +266,3 @@ function button_number(button) {
     }
 
 }
-
-
-
-// document.addEventListener('keydown', keyPressed);
-// document.addEventListener('keyup', keyReleased);
-
-// // function to capture keydown events
-// function keyPressed(e) {
-//     e.preventDefault()
-//     var equal = document.getElementById("equal_sign").value;
-//     var dot = document.getElementById("dot").value;
-
-//     if (e.key == "Delete") {
-//         button_clear();
-//         return;
-//     }
-
-//     var isNumber = isFinite(e.key);
-//     var enterPress;
-//     var dotPress;
-//     var commaPress = false;
-
-//     if (e.key == "Enter") {
-//         enterPress = equal;
-//     }
-//     if (e.key == ".") {
-//         dotPress = dot;
-//     }
-//     if (e.key == ",") {
-//         commaPress = true;
-//     }
-
-//     if (isNumber || operators.includes(e.key) || e.key == "Enter" || e.key == dotPress ||
-//         commaPress || e.key == "Backspace") {
-//         if (e.key == "Enter") {
-//             button_number(enterPress)
-//         }
-//         else if (e.key == "Backspace") {
-//             document.getElementById("backspace_btn").style.backgroundColor = "#999999";
-//             backspace_remove()
-//         }
-//         else if (commaPress) {
-//             button_number(dot)
-//         }
-//         else {
-//             button_number(e.key)
-//         }
-//     }
-// }
-
-// // function to capture keyup events
-// function keyReleased(e) {
-//     e.preventDefault()
-//     // set the color of the backspace button back to its original
-//     if (e.key == "Backspace") {
-//         document.getElementById("backspace_btn").style.backgroundColor = "#666666";
-//     }
-// }
