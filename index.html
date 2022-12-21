@@ -15,48 +15,46 @@
     <div class="calculator">
         <div class="row"></div>
         <h1 class="title">Calculator</h1>
-        <p class="history" id="history"></p>
-        <p id="input" class="box">0</p>
+        <input class="input_field" name="screen" type="text" id="answer">
         <div class="row">
-            <button class="button" onclick="exponential_button()">^</button>
+            <button class="button">^</button>
             <button class="button">(</button>
             <button class="button">)</button>
-            <button class="button" onclick="clear_entry()">CE</button>
-            <button class="button" onclick="clear_button()">C</button>
-            <button class="button backspace_btn" id="backspace_btn" onclick="backspace()"></button>
+            <button class="button">0</button>
+            <button class="button">C</button>
+            <button class="button backspace_btn" id="backspace_btn">,</button>
 
         </div>
         <div class="row">
-            <button class="button" onclick="sin_button()">sin</button>
-            <button class="button" onclick="button_value(2.7182)">e</button>
-            <button class="button" onclick="button_number(7)">7</button>
-            <button class="button" onclick="button_number(8)">8</button>
-            <button class="button" onclick="button_number(9)">9</button>
-            <button class="button operator" onclick="button_number('/')">÷</button>
+            <button class="button">sin</button>
+            <button class="button">e</button>
+            <button class="button">7</button>
+            <button class="button">8</button>
+            <button class="button">9</button>
+            <button class="button operator">÷</button>
         </div>
         <div class="row">
-            <button class="button" onclick="cos_button()">cos</button>
-            <button class="button" onclick="power_of()">𝑥²</button>
-            <button class="button" onclick="button_number(4)">4</button>
-            <button class="button" onclick="button_number(5)">5</button>
-            <button class="button" onclick="button_number(6)">6</button>
-            <button class="button operator" onclick="button_number('*')">×</button>
+            <button class="button">cos</button>
+            <button class="button">√x</button>
+            <button class="button">4</button>
+            <button class="button">5</button>
+            <button class="button">6</button>
+            <button class="button operator">*</button>
         </div>
         <div class="row">
-            <button class="button" onclick="tan_button()">tan</button>
-            <button class="button" onclick="button_value(3.1415)">pi</button>
-            <button class="button" onclick="button_number(1)">1</button>
-            <button class="button" onclick="button_number(2)">2</button>
-            <button class="button" onclick="button_number(3)">3</button>
-            <button class="button operator" onclick="button_number('-')">-</button>
+            <button class="button">tan</button>
+            <button class="button">pi</button>
+            <button class="button">1</button>
+            <button class="button">2</button>
+            <button class="button">3</button>
+            <button class="button operator">-</button>
         </div>
         <div class="row">
-            <button class="button" onclick="button_number(0)">0</button>
-            <button class="button" id="dot" value="." onclick="button_number('.')">.</button>
-            <button class="button equal_sign operator" value="newOp" id="newOp"
-                onclick="button_number('newOp')">New</button>
-            <button class="button equal_sign operator" value="=" id="equal_sign" onclick="button_number('=')">=</button>
-            <button class="button operator" onclick="button_number('+')">+</button>
+
+            <button class="button">.</button>
+            <button class="button equal_sign operator">=</button>
+            <button class="button equal_sign operator">History</button>
+            <button class="button operator">+</button>
         </div>
     </div>
 </body>
