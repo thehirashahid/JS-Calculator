@@ -11,37 +11,79 @@ window.onload = function () {
     const buttonRow = document.querySelectorAll("button");
     let screen = document.getElementById("answer");
     let screenValue = "";
+    let trigno = ['sin(', 'cos(', 'tan(']
     for (item of buttonRow) {
         item.addEventListener("click", (e) => {
             buttonText = e.target.innerText;
-            if (buttonText == "." && answer.value.length == 0) {
-                screenValue += `0.`
+            if (buttonText === "." && answer.value.length == 0) {
+                screenValue = `0.`
                 screen.value = screenValue
             }
             else if (answer.value.includes(".") && buttonText == ".") return;
-            else if (buttonText == "X") {
-                buttonText = "*";
-                screenValue += buttonText;
-                screen.value = screenValue;
-            } else if (buttonText == "C") {
+            else if (buttonText == "C") {
                 screenValue = "";
                 screen.value = screenValue;
             } else if (buttonText == "=") {
-                console.log(screenValue);
-                let i = infixToPrefix(screenValue);
-                console.log(`infix to prefix: ${i}`);
-                let e = evaluatePrefix(i);
-                console.log(`evaluate prefix: ${e}`);
-                screen.value = e;
+                // check if expression has trignometric function
+                if (screenValue.includes('sin(')) {
+                    let words = screenValue.slice(3)
+                    if (matchBrackets(words)) {
+                        let i = infixToPrefix(screenValue);
+                        let e = evaluatePrefix(i);
+                        screen.value = call_button('sin', e);
+                    }
+                    else {
+                        screen.value = 'Invalid Expression';
+                    }
+                }
+                else if (screenValue.includes('cos(')) {
+                    let words = screenValue.slice(3)
+                    if (matchBrackets(words)) {
+                        let i = infixToPrefix(screenValue);
+                        let e = evaluatePrefix(i);
+                        screen.value = call_button('cos', e);
+                    }
+                    else {
+                        screen.value = 'Invalid Expression';
+                    }
+                }
+                else if (screenValue.includes('tan(')) {
+                    let words = screenValue.slice(3)
+                    if (matchBrackets(words)) {
+                        let i = infixToPrefix(screenValue);
+                        let e = evaluatePrefix(i);
+                        screen.value = call_button('tan', e);
+                    }
+                    else {
+                        screen.value = 'Invalid Expression';
+                    }
+                }
+                else if (screenValue.includes('√x(')) {
+                    let words = screenValue.slice(1)
+                    if (matchBrackets(words)) {
+                        let i = infixToPrefix(screenValue);
+                        let e = evaluatePrefix(i);
+                        screen.value = call_button('pow', e);
+                    }
+                    else {
+                        screen.value = 'Invalid Expression';
+                    }
+                }
+                else if (matchBrackets(screenValue)) {
+                    let i = infixToPrefix(screenValue);
+                    console.log(`infix to prefix: ${i}`);
+                    let e = evaluatePrefix(i);
+                    console.log(`evaluate prefix: ${e}`);
+                    screen.value = e;
+                }
+                else {
+                    screen.value = 'Invalid Expression';
+                }
             }
             else if (buttonText == "e") screen.value = 2.7182
             else if (buttonText == "pi") screen.value = 3.1415
             else if (buttonText == "CE") screenValue = ""
             else if (buttonText == "C") window.location.reload()
-            else if (buttonText == "sin") screen.value = call_button("sin", screen.value)
-            else if (buttonText == "cos") screen.value = call_button("cos", screen.value)
-            else if (buttonText == "tan") screen.value = call_button("tan", screen.value)
-            else if (buttonText == "√x") screen.value = call_button("pow", screen.value)
             else if (buttonText == ",") {
                 screenValue = screenValue.slice(0, -1)
                 screen.value = screenValue;
@@ -131,6 +173,54 @@ window.onload = function () {
             return false;
     }
 
+    function matchBrackets(s) {
+        let x = "";
+        let c = [];
+        let ok = true;
+        for (let i = 0; i < s.length; i++) {
+            x = s.substr(i, 1);
+            switch (x) {
+                case "{":
+                    c.unshift("}");
+                    break;
+                case "[":
+                    c.unshift("]");
+                    break;
+                case "(":
+                    c.unshift(")");
+                    break;
+                case "}":
+                    if (c[0] == "}") {
+                        c.shift();
+                    } else {
+                        ok = false;
+                    }
+                    break;
+                case "]":
+                    if (c[0] == "]") {
+                        c.shift();
+                    } else {
+                        ok = false;
+                    }
+                    break;
+                case ")":
+                    if (c[0] == ")") {
+                        c.shift();
+                    } else {
+                        ok = false;
+                    }
+                    break;
+            }
+            if (!ok) {
+                break;
+            }
+        }
+        if (c.length > 0) {
+            ok = false;
+        }
+        return ok;
+    }
+
     function evaluatePrefix(exprsn) {
         let Stack = [];
         for (let j = exprsn.length - 1; j >= 0; j--) {
@@ -141,6 +231,7 @@ window.onload = function () {
 
                 Stack.pop();
                 let o2 = Stack[Stack.length - 1];
+                console.log(`o1: ${o1} and o2: ${o2}`)
                 Stack.pop();
                 switch (exprsn[j]) {
                     case '+':
