@@ -1,5 +1,7 @@
 // document.getElementById("answer").readOnly = true; //set this attribute in Html file
 
+
+
 function call_button(str, answer) {
     if (str === "sin") return Math.sin(answer).toPrecision(4);
     else if (str === "cos") return Math.cos(answer).toPrecision(4);
@@ -8,6 +10,19 @@ function call_button(str, answer) {
 }
 
 window.onload = function () {
+    let history = [];
+    function showDiv() {
+        var div = document.createElement('div');
+        document.getElementById('welcomeDiv').style.display = "block";
+        // document.getElementById('welcomeDiv')[0].appendChild(div);
+        console.log(history)
+        for (let i = 0; i < history.length; i++) {
+            console.log(history[i]);
+            document.getElementById('welcomeDiv').innerText = `${history[i]} \n`
+            // document.getElementById('welcomeDiv').innerText += `\n`
+        }
+    };
+
     const buttonRow = document.querySelectorAll("button");
     let screen = document.getElementById("answer");
     let screenValue = "";
@@ -26,72 +41,95 @@ window.onload = function () {
             else if (answer.value.includes(".") && buttonText == ".") return;
             else if (buttonText == "=") {
                 if (screenValue.includes('sin(')) {
+                    let exp = screenValue;
                     let words = screenValue.slice(3)
                     if (matchBrackets(words)) {
                         let i = infixToPrefix(words);
                         let e = evaluatePrefix(i);
                         screenValue = call_button('sin', e);
                         screen.value = screenValue;
+                        history.push(`${exp} = ${screenValue}`);
+                        console.log(history)
                     }
                     else {
                         screen.value = 'Invalid Expression';
                     }
                 }
                 else if (screenValue.includes('cos(')) {
+                    let exp = screenValue;
                     let words = screenValue.slice(3)
                     if (matchBrackets(words)) {
                         let i = infixToPrefix(words);
                         let e = evaluatePrefix(i);
                         screenValue = call_button('cos', e);
                         screen.value = screenValue;
+                        history.push(`${exp} = ${screenValue}`);
+                        console.log(history)
                     }
                     else {
                         screen.value = 'Invalid Expression';
                     }
                 }
                 else if (screenValue.includes('tan(')) {
+                    let exp = screenValue;
                     let words = screenValue.slice(3)
                     if (matchBrackets(words)) {
                         let i = infixToPrefix(words);
                         let e = evaluatePrefix(i);
                         screenValue = call_button('tan', e);
                         screen.value = screenValue;
+                        history.push(`${exp} = ${screenValue}`);
+                        console.log(history)
                     }
                     else {
                         screen.value = 'Invalid Expression';
                     }
                 }
                 else if (screenValue.includes('√(')) {
+                    let exp = screenValue;
                     let words = screenValue.slice(1)
                     if (matchBrackets(words)) {
                         let i = infixToPrefix(words);
                         let e = evaluatePrefix(i);
                         screenValue = call_button('pow', e);
                         screen.value = screenValue;
+                        history.push(`${exp} = ${screenValue}`);
+                        console.log(history)
                     }
                     else {
                         screen.value = 'Invalid Expression';
                     }
                 }
                 else if (matchBrackets(screenValue)) {
+                    let exp = screenValue;
                     const myArray = screenValue.split(" ");
                     let i = infixToPrefix(myArray);
-
                     const myArrayy = i.split(" ");
                     console.log(`infix to prefix: ${myArrayy}`);
                     let e = evaluatePrefix(myArrayy);
                     console.log(`evaluate prefix: ${e}`);
                     screenValue = e;
                     screen.value = screenValue;
+                    history.push(`${exp} = ${screenValue}`);
+                    console.log(history)
                 }
                 else {
                     screen.value = 'Invalid Expression';
                 }
             }
-            else if (buttonText == "e") screen.value = 2.7182
-            else if (buttonText == "pi") screen.value = 3.1415
-            else if (buttonText == "CE") screenValue = ""
-            else if (buttonText == "C") window.location.reload()
+            else if (buttonText == "e") {
+                screenValue = 2.7182
+                screen.value = screenValue
+            }
+            else if (buttonText == "pi") {
+                screenValue = 3.1415
+                screen.value = screenValue
+            }
+            else if (buttonText == "C") {
+                screenValue = ""
+                screen.value = screenValue;
+            }
+            else if (buttonText == "History") showDiv()
             else if (buttonText == ",") {
                 screenValue = screenValue.slice(0, -1)
                 screen.value = screenValue;
