@@ -1,7 +1,4 @@
 // document.getElementById("answer").readOnly = true; //set this attribute in Html file
-
-
-
 function call_button(str, answer) {
     if (str === "sin") return Math.sin(answer).toPrecision(4);
     else if (str === "cos") return Math.cos(answer).toPrecision(4);
@@ -38,7 +35,7 @@ window.onload = function () {
                 screen.value = screenValue
             }
             else if (trigno.includes(buttonText)) {
-                screenValue = `${buttonText}(`;
+                screenValue = `${buttonText}( `;
                 screen.value = screenValue;
             }
             else if (answer.value.includes(".") && buttonText == ".") return;
@@ -47,14 +44,19 @@ window.onload = function () {
                     let exp = screenValue;
                     let words = screenValue.slice(3)
                     if (matchBrackets(words)) {
-                        let i = infixToPrefix(words);
-                        let e = evaluatePrefix(i);
+                        const myArray = words.split(" ");
+                        let i = infixToPrefix(myArray);
+                        const myArrayy = i.split(" ");
+                        let e = evaluatePrefix(myArrayy);
                         screenValue = call_button('sin', e);
                         screen.value = screenValue;
                         history.push(`${exp} = ${screenValue}`);
-                        console.log(history)
                     }
                     else {
+                        let exp = screenValue;
+                        screenValue = 'Invalid Expression'
+                        screen.value = screenValue;
+                        history.push(`${exp} = ${screenValue}`);
                         screen.value = 'Invalid Expression';
                     }
                 }
@@ -62,14 +64,19 @@ window.onload = function () {
                     let exp = screenValue;
                     let words = screenValue.slice(3)
                     if (matchBrackets(words)) {
-                        let i = infixToPrefix(words);
-                        let e = evaluatePrefix(i);
+                        const myArray = words.split(" ");
+                        let i = infixToPrefix(myArray);
+                        const myArrayy = i.split(" ");
+                        let e = evaluatePrefix(myArrayy);
                         screenValue = call_button('cos', e);
                         screen.value = screenValue;
                         history.push(`${exp} = ${screenValue}`);
-                        console.log(history)
                     }
                     else {
+                        let exp = screenValue;
+                        screenValue = 'Invalid Expression'
+                        screen.value = screenValue;
+                        history.push(`${exp} = ${screenValue}`);
                         screen.value = 'Invalid Expression';
                     }
                 }
@@ -77,14 +84,20 @@ window.onload = function () {
                     let exp = screenValue;
                     let words = screenValue.slice(3)
                     if (matchBrackets(words)) {
-                        let i = infixToPrefix(words);
-                        let e = evaluatePrefix(i);
+                        const myArray = words.split(" ");
+                        let i = infixToPrefix(myArray);
+                        const myArrayy = i.split(" ");
+                        let e = evaluatePrefix(myArrayy);
                         screenValue = call_button('tan', e);
                         screen.value = screenValue;
                         history.push(`${exp} = ${screenValue}`);
                         console.log(history)
                     }
                     else {
+                        let exp = screenValue;
+                        screenValue = 'Invalid Expression'
+                        screen.value = screenValue;
+                        history.push(`${exp} = ${screenValue}`);
                         screen.value = 'Invalid Expression';
                     }
                 }
@@ -92,14 +105,19 @@ window.onload = function () {
                     let exp = screenValue;
                     let words = screenValue.slice(1)
                     if (matchBrackets(words)) {
-                        let i = infixToPrefix(words);
-                        let e = evaluatePrefix(i);
+                        const myArray = words.split(" ");
+                        let i = infixToPrefix(myArray);
+                        const myArrayy = i.split(" ");
+                        let e = evaluatePrefix(myArrayy);
                         screenValue = call_button('pow', e);
                         screen.value = screenValue;
                         history.push(`${exp} = ${screenValue}`);
-                        console.log(history)
                     }
                     else {
+                        let exp = screenValue;
+                        screenValue = 'Invalid Expression'
+                        screen.value = screenValue;
+                        history.push(`${exp} = ${screenValue}`);
                         screen.value = 'Invalid Expression';
                     }
                 }
@@ -111,13 +129,15 @@ window.onload = function () {
                     console.log(`infix to prefix: ${myArrayy}`);
                     let e = evaluatePrefix(myArrayy);
                     console.log(`evaluate prefix: ${e}`);
-                    screenValue = e;
+                    screenValue = e.toPrecision(4);
                     screen.value = screenValue;
                     history.push(`${exp} = ${screenValue}`);
-                    console.log(history)
                 }
                 else {
-                    screen.value = 'Invalid Expression';
+                    let exp = screenValue;
+                    screenValue = 'Invalid Expression'
+                    screen.value = screenValue;
+                    history.push(`${exp} = ${screenValue}`);
                 }
             }
             else if (buttonText == "e") {
@@ -333,6 +353,6 @@ window.onload = function () {
                 }
             }
         }
-        return Stack[Stack.length - 1].toPrecision(4);
+        return Stack[Stack.length - 1]
     }
 }
