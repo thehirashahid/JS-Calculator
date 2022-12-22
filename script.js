@@ -76,8 +76,9 @@ window.onload = function () {
                 else if (matchBrackets(screenValue)) {
                     const myArray = screenValue.split(" ");
                     let i = infixToPrefix(myArray);
-                    console.log(`infix to prefix: ${i}`);
+
                     const myArrayy = i.split(" ");
+                    console.log(`infix to prefix: ${myArrayy}`);
                     let e = evaluatePrefix(myArrayy);
                     console.log(`evaluate prefix: ${e}`);
                     screenValue = e;
@@ -96,9 +97,17 @@ window.onload = function () {
                 screen.value = screenValue;
             }
             else {
-                let num = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
+                let num = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9',]
                 if (num.includes(buttonText)) {
                     screenValue += buttonText;
+                    screen.value = screenValue;
+                }
+                else if (buttonText == '(') {
+                    screenValue += `${buttonText} `;
+                    screen.value = screenValue;
+                }
+                else if (buttonText == ')') {
+                    screenValue += ` ${buttonText}`;
                     screen.value = screenValue;
                 }
                 else {
@@ -116,9 +125,6 @@ window.onload = function () {
     };
 
     function isOperator(c) {
-        // return (!(c >= 'a' && c <= 'z') &&
-        //     !(c >= '0' && c <= '9') &&
-        //     !(c >= 'A' && c <= 'Z'));
         let op = ['+', '-', '/', '*', '^']
         if (op.includes(c)) return c
     }
@@ -135,6 +141,7 @@ window.onload = function () {
 
 
     function infixToPrefix(infix) {
+        console.log(`in: ${infix}`)
         // stack for operators.
         let operators = [];
         // stack for operands.
@@ -246,32 +253,29 @@ window.onload = function () {
             if (isOperand(exprsn[j])) {
                 console.log(exprsn[j])
                 Stack.push((exprsn[j]));
-                console.log(`stack: ${Stack}`)
             }
             else {
-                console.log(`stack: ${Stack}`)
                 let o1 = Stack[Stack.length - 1];
                 Stack.pop();
                 let o2 = Stack[Stack.length - 1];
-                console.log(`o1: ${o1} and o2: ${o2}`)
                 Stack.pop();
                 console.log(exprsn[j])
                 switch (exprsn[j]) {
                     case '+':
-                        Stack.push(o1 + o2);
+                        Stack.push(parseInt(o1) + parseInt(o2));
                         break;
                     case '-':
-                        Stack.push(o1 - o2);
+                        Stack.push(parseInt(o1) - parseInt(o2));
                         break;
                     case '*':
-                        Stack.push(o1 * o2);
+                        Stack.push(parseInt(o1) * parseInt(o2));
                         break;
                     case '/':
-                        Stack.push(o1 / o2);
+                        Stack.push(parseInt(o1) / parseInt(o2));
                         break;
                     case '^':
-                        console.log('here: ' + o1 ^ o2);
-                        Stack.push(o1 / o2);
+                        // console.log('here: ' + parseInt(o1) ^ parseInt(o2));
+                        Stack.push(parseInt(o1) / parseInt(o2));
                         break;
                 }
             }
