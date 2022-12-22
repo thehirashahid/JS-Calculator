@@ -74,9 +74,11 @@ window.onload = function () {
                     }
                 }
                 else if (matchBrackets(screenValue)) {
-                    let i = infixToPrefix(screenValue);
+                    const myArray = screenValue.split(" ");
+                    let i = infixToPrefix(myArray);
                     console.log(`infix to prefix: ${i}`);
-                    let e = evaluatePrefix(i);
+                    const myArrayy = i.split(" ");
+                    let e = evaluatePrefix(myArrayy);
                     console.log(`evaluate prefix: ${e}`);
                     screenValue = e;
                     screen.value = screenValue;
@@ -94,8 +96,15 @@ window.onload = function () {
                 screen.value = screenValue;
             }
             else {
-                screenValue += buttonText;
-                screen.value = screenValue;
+                let num = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
+                if (num.includes(buttonText)) {
+                    screenValue += buttonText;
+                    screen.value = screenValue;
+                }
+                else {
+                    screenValue += ` ${buttonText} `;
+                    screen.value = screenValue;
+                }
             }
         });
     }
@@ -107,9 +116,11 @@ window.onload = function () {
     };
 
     function isOperator(c) {
-        return (!(c >= 'a' && c <= 'z') &&
-            !(c >= '0' && c <= '9') &&
-            !(c >= 'A' && c <= 'Z'));
+        // return (!(c >= 'a' && c <= 'z') &&
+        //     !(c >= '0' && c <= '9') &&
+        //     !(c >= 'A' && c <= 'Z'));
+        let op = ['+', '-', '/', '*', '^']
+        if (op.includes(c)) return c
     }
 
     function getPriority(C) {
@@ -144,7 +155,8 @@ window.onload = function () {
                 operators.pop();
             }
             else if (!isOperator(infix[i])) {
-                operands.push(infix[i] + "");
+                operands.push(`${infix[i]} `);
+                console.log(`operands: ${operands}`)
             }
             else {
                 while (operators.length &&
@@ -156,7 +168,7 @@ window.onload = function () {
                     let tmp = op + op2 + op1;
                     operands.push(tmp);
                 }
-                operators.push(infix[i]);
+                operators.push(`${infix[i]} `);
             }
         }
         while (operators.length != 0) {
@@ -228,13 +240,17 @@ window.onload = function () {
     }
 
     function evaluatePrefix(exprsn) {
+        console.log(exprsn)
         let Stack = [];
         for (let j = exprsn.length - 1; j >= 0; j--) {
-            if (isOperand(exprsn[j]))
-                Stack.push((exprsn[j].charCodeAt() - 48));
+            if (isOperand(exprsn[j])) {
+                console.log(exprsn[j])
+                Stack.push((exprsn[j]));
+                console.log(`stack: ${Stack}`)
+            }
             else {
+                console.log(`stack: ${Stack}`)
                 let o1 = Stack[Stack.length - 1];
-
                 Stack.pop();
                 let o2 = Stack[Stack.length - 1];
                 console.log(`o1: ${o1} and o2: ${o2}`)
