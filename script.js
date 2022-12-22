@@ -11,7 +11,7 @@ window.onload = function () {
     const buttonRow = document.querySelectorAll("button");
     let screen = document.getElementById("answer");
     let screenValue = "";
-    let trigno = ['sin(', 'cos(', 'tan(']
+    let trigno = ['sin', 'cos', 'tan', '√']
     for (item of buttonRow) {
         item.addEventListener("click", (e) => {
             buttonText = e.target.innerText;
@@ -19,16 +19,16 @@ window.onload = function () {
                 screenValue = `0.`
                 screen.value = screenValue
             }
-            else if (answer.value.includes(".") && buttonText == ".") return;
-            else if (buttonText == "C") {
-                screenValue = "";
+            else if (trigno.includes(buttonText)) {
+                screenValue = `${buttonText}(`;
                 screen.value = screenValue;
-            } else if (buttonText == "=") {
-                // check if expression has trignometric function
+            }
+            else if (answer.value.includes(".") && buttonText == ".") return;
+            else if (buttonText == "=") {
                 if (screenValue.includes('sin(')) {
                     let words = screenValue.slice(3)
                     if (matchBrackets(words)) {
-                        let i = infixToPrefix(screenValue);
+                        let i = infixToPrefix(words);
                         let e = evaluatePrefix(i);
                         screen.value = call_button('sin', e);
                     }
@@ -39,7 +39,7 @@ window.onload = function () {
                 else if (screenValue.includes('cos(')) {
                     let words = screenValue.slice(3)
                     if (matchBrackets(words)) {
-                        let i = infixToPrefix(screenValue);
+                        let i = infixToPrefix(words);
                         let e = evaluatePrefix(i);
                         screen.value = call_button('cos', e);
                     }
@@ -50,7 +50,7 @@ window.onload = function () {
                 else if (screenValue.includes('tan(')) {
                     let words = screenValue.slice(3)
                     if (matchBrackets(words)) {
-                        let i = infixToPrefix(screenValue);
+                        let i = infixToPrefix(words);
                         let e = evaluatePrefix(i);
                         screen.value = call_button('tan', e);
                     }
@@ -58,10 +58,10 @@ window.onload = function () {
                         screen.value = 'Invalid Expression';
                     }
                 }
-                else if (screenValue.includes('√x(')) {
+                else if (screenValue.includes('√(')) {
                     let words = screenValue.slice(1)
                     if (matchBrackets(words)) {
-                        let i = infixToPrefix(screenValue);
+                        let i = infixToPrefix(words);
                         let e = evaluatePrefix(i);
                         screen.value = call_button('pow', e);
                     }
@@ -70,11 +70,11 @@ window.onload = function () {
                     }
                 }
                 else if (matchBrackets(screenValue)) {
-                    let i = infixToPrefix(screenValue);
-                    console.log(`infix to prefix: ${i}`);
-                    let e = evaluatePrefix(i);
-                    console.log(`evaluate prefix: ${e}`);
-                    screen.value = e;
+                    // let i = infixToPrefix(screenValue);
+                    // console.log(`infix to prefix: ${i}`);
+                    // let e = evaluatePrefix(i);
+                    // console.log(`evaluate prefix: ${e}`);
+                    // screen.value = e;
                 }
                 else {
                     screen.value = 'Invalid Expression';
@@ -164,6 +164,7 @@ window.onload = function () {
         return operands[operands.length - 1];
     }
 
+
     // Javascript program to evaluate a prefix expression.
 
     function isOperand(c) {
@@ -233,6 +234,7 @@ window.onload = function () {
                 let o2 = Stack[Stack.length - 1];
                 console.log(`o1: ${o1} and o2: ${o2}`)
                 Stack.pop();
+                console.log(exprsn[j])
                 switch (exprsn[j]) {
                     case '+':
                         Stack.push(o1 + o2);
@@ -244,6 +246,10 @@ window.onload = function () {
                         Stack.push(o1 * o2);
                         break;
                     case '/':
+                        Stack.push(o1 / o2);
+                        break;
+                    case '^':
+                        console.log('here: ' + o1 ^ o2);
                         Stack.push(o1 / o2);
                         break;
                 }

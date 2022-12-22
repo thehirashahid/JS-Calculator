@@ -5,55 +5,61 @@
 <head>
     <Title>Calculator</title>
     <link rel="stylesheet" type="text/css" href="./style.css" />
-    <script language="JavaScript" src="./script.js" type="text/javascript"></script>
+    <script language="JavaScript" src="./j.js" type="text/javascript"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="assets/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body>
-    <div class="calculator">
-        <div class="row"></div>
-        <h1 class="title">Calculator</h1>
-        <input class="input_field" name="screen" type="text" id="answer">
-        <div class="row">
-            <button class="button">^</button>
-            <button class="button">(</button>
-            <button class="button">)</button>
-            <button class="button">0</button>
-            <button class="button">C</button>
-            <button class="button backspace_btn" id="backspace_btn">,</button>
+    <div class="row dis">
+        <div class="calculator">
+            <h1 class="title">History</h1>
+            <div>
+            </div>
+        </div>
+        <div class="calculator">
+            <h1 class="title">Calculator</h1>
+            <input class="input_field" name="screen" type="text" id="answer">
+            <div class="row">
+                <button class="button">^</button>
+                <button class="button">(</button>
+                <button class="button">)</button>
+                <button class="button">0</button>
+                <button class="button">C</button>
+                <button class="button backspace_btn" id="backspace_btn">,</button>
 
-        </div>
-        <div class="row">
-            <button class="button">sin(</button>
-            <button class="button">e</button>
-            <button class="button">7</button>
-            <button class="button">8</button>
-            <button class="button">9</button>
-            <button class="button operator">/</button>
-        </div>
-        <div class="row">
-            <button class="button">cos(</button>
-            <button class="button">√x(</button>
-            <button class="button">4</button>
-            <button class="button">5</button>
-            <button class="button">6</button>
-            <button class="button operator">*</button>
-        </div>
-        <div class="row">
-            <button class="button">tan(</button>
-            <button class="button">pi</button>
-            <button class="button">1</button>
-            <button class="button">2</button>
-            <button class="button">3</button>
-            <button class="button operator">-</button>
-        </div>
-        <div class="row">
-            <button class="button">.</button>
-            <button class="button equal_sign operator">=</button>
-            <button class="button equal_sign operator">History</button>
-            <button class="button operator">+</button>
+            </div>
+            <div class="row">
+                <button class="button">sin</button>
+                <button class="button">e</button>
+                <button class="button">7</button>
+                <button class="button">8</button>
+                <button class="button">9</button>
+                <button class="button operator">/</button>
+            </div>
+            <div class="row">
+                <button class="button">cos</button>
+                <button class="button">√</button>
+                <button class="button">4</button>
+                <button class="button">5</button>
+                <button class="button">6</button>
+                <button class="button operator">*</button>
+            </div>
+            <div class="row">
+                <button class="button">tan</button>
+                <button class="button">pi</button>
+                <button class="button">1</button>
+                <button class="button">2</button>
+                <button class="button">3</button>
+                <button class="button operator">-</button>
+            </div>
+            <div class="row">
+                <button class="button">.</button>
+                <button class="button equal_sign operator">=</button>
+                <button class="button equal_sign operator">History</button>
+                <button class="button operator">+</button>
+            </div>
         </div>
     </div>
 </body>

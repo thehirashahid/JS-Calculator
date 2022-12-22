@@ -31,18 +31,18 @@ body {
 
 }
 
+.dis {
+    display: flex;
+    padding: 10% 7%;
+}
+
 .calculator {
     width: auto;
     height: auto;
     padding: 1.5vh;
     border: 5px solid #666666;
     border-radius: 15px;
-    margin: 0;
-    position: absolute;
-    top: 45%;
-    left: 50%;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
+    margin-left: 15%;
 }
 
 .history {
