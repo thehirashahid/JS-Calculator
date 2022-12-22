@@ -12,14 +12,17 @@ function call_button(str, answer) {
 window.onload = function () {
     let history = [];
     function showDiv() {
-        var div = document.createElement('div');
-        document.getElementById('welcomeDiv').style.display = "block";
-        // document.getElementById('welcomeDiv')[0].appendChild(div);
-        console.log(history)
+        const element = document.getElementById("welcomeDiv");
+        var child = element.lastElementChild;
+        while (child) {
+            element.removeChild(child);
+            child = element.lastElementChild;
+        }
         for (let i = 0; i < history.length; i++) {
-            console.log(history[i]);
-            document.getElementById('welcomeDiv').innerText = `${history[i]} \n`
-            // document.getElementById('welcomeDiv').innerText += `\n`
+            const node = document.createElement("div");
+            const textnode = document.createTextNode(`${history[i]}`);
+            node.appendChild(textnode);
+            document.getElementById("welcomeDiv").appendChild(node);
         }
     };
 
@@ -131,8 +134,20 @@ window.onload = function () {
             }
             else if (buttonText == "History") showDiv()
             else if (buttonText == ",") {
-                screenValue = screenValue.slice(0, -1)
-                screen.value = screenValue;
+                var res = screenValue.charAt(screenValue.length - 1);
+                if (res == " ") {
+                    screenValue = screenValue.slice(0, -2)
+                    screen.value = screenValue;
+                }
+                else {
+                    screenValue = screenValue.slice(0, -1)
+                    res = screenValue.charAt(screenValue.length - 1);
+                    if (res == " ") {
+                        screenValue = screenValue.slice(0, -1)
+                        screen.value = screenValue;
+                    }
+                    screen.value = screenValue;
+                }
             }
             else {
                 let num = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9',]
@@ -318,6 +333,6 @@ window.onload = function () {
                 }
             }
         }
-        return Stack[Stack.length - 1];
+        return Stack[Stack.length - 1].toPrecision(4);
     }
 }
