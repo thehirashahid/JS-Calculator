@@ -30,7 +30,8 @@ window.onload = function () {
                     if (matchBrackets(words)) {
                         let i = infixToPrefix(words);
                         let e = evaluatePrefix(i);
-                        screen.value = call_button('sin', e);
+                        screenValue = call_button('sin', e);
+                        screen.value = screenValue;
                     }
                     else {
                         screen.value = 'Invalid Expression';
@@ -41,7 +42,8 @@ window.onload = function () {
                     if (matchBrackets(words)) {
                         let i = infixToPrefix(words);
                         let e = evaluatePrefix(i);
-                        screen.value = call_button('cos', e);
+                        screenValue = call_button('cos', e);
+                        screen.value = screenValue;
                     }
                     else {
                         screen.value = 'Invalid Expression';
@@ -52,7 +54,8 @@ window.onload = function () {
                     if (matchBrackets(words)) {
                         let i = infixToPrefix(words);
                         let e = evaluatePrefix(i);
-                        screen.value = call_button('tan', e);
+                        screenValue = call_button('tan', e);
+                        screen.value = screenValue;
                     }
                     else {
                         screen.value = 'Invalid Expression';
@@ -63,18 +66,20 @@ window.onload = function () {
                     if (matchBrackets(words)) {
                         let i = infixToPrefix(words);
                         let e = evaluatePrefix(i);
-                        screen.value = call_button('pow', e);
+                        screenValue = call_button('pow', e);
+                        screen.value = screenValue;
                     }
                     else {
                         screen.value = 'Invalid Expression';
                     }
                 }
                 else if (matchBrackets(screenValue)) {
-                    // let i = infixToPrefix(screenValue);
-                    // console.log(`infix to prefix: ${i}`);
-                    // let e = evaluatePrefix(i);
-                    // console.log(`evaluate prefix: ${e}`);
-                    // screen.value = e;
+                    let i = infixToPrefix(screenValue);
+                    console.log(`infix to prefix: ${i}`);
+                    let e = evaluatePrefix(i);
+                    console.log(`evaluate prefix: ${e}`);
+                    screenValue = e;
+                    screen.value = screenValue;
                 }
                 else {
                     screen.value = 'Invalid Expression';
