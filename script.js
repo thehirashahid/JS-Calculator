@@ -8,6 +8,8 @@ function call_button(str, answer) {
 
 window.onload = function () {
     let history = [];
+    let history_ans = [];
+    let firstNum = true;
     function showDiv() {
         const element = document.getElementById("welcomeDiv");
         var child = element.lastElementChild;
@@ -17,8 +19,14 @@ window.onload = function () {
         }
         for (let i = 0; i < history.length; i++) {
             const node = document.createElement("div");
+            node.style.border = "1px solid #666666";
+            node.style.padding = "2px"
+            node.style.borderRadius = "2px"
+            node.style.margin = "4px"
             const textnode = document.createTextNode(`${history[i]}`);
+            const textnode_ans = document.createTextNode(` ${history_ans[i]}`);
             node.appendChild(textnode);
+            node.appendChild(textnode_ans);
             document.getElementById("welcomeDiv").appendChild(node);
         }
     };
@@ -26,13 +34,35 @@ window.onload = function () {
     const buttonRow = document.querySelectorAll("button");
     let screen = document.getElementById("answer");
     let screenValue = "";
+    let last_element;
     let trigno = ['sin', 'cos', 'tan', '√']
+    let operators = ["+", "-", "/", "*"];
+
     for (item of buttonRow) {
         item.addEventListener("click", (e) => {
             buttonText = e.target.innerText;
-            if (buttonText === "." && answer.value.length == 0) {
-                screenValue = `0.`
-                screen.value = screenValue
+            if (firstNum) {
+                if (buttonText === ".") {
+                    screenValue = `0.`
+                    screen.value = screenValue
+                }
+                else if (buttonText === "+" || buttonText === '-') {
+                    screenValue = buttonText
+                    screen.value = screenValue
+                }
+                firstNum = false;
+            }
+            // return if the box already has a dot and clicked button is a dot
+            if (screenValue.includes(".") && buttonText == ".") {
+                return;
+            }
+            // maximum allowed numbers inputted are 20
+            if (screenValue.length == 20) {
+                return;
+            }
+            // if pressed dot and box already has a - sign, show -0.
+            if (buttonText == "." && screenValue == "-") {
+                screenValue = "-0" + ".";
             }
             else if (trigno.includes(buttonText)) {
                 screenValue = `${buttonText}( `;
@@ -50,13 +80,15 @@ window.onload = function () {
                         let e = evaluatePrefix(myArrayy);
                         screenValue = call_button('sin', e);
                         screen.value = screenValue;
-                        history.push(`${exp} = ${screenValue}`);
+                        history_ans.push(`  =  ${screenValue}`)
+                        history.push(exp);
                     }
                     else {
                         let exp = screenValue;
                         screenValue = 'Invalid Expression'
                         screen.value = screenValue;
-                        history.push(`${exp} = ${screenValue}`);
+                        history_ans.push(`  =  ${screenValue}`)
+                        history.push(exp);
                         screen.value = 'Invalid Expression';
                     }
                 }
@@ -70,13 +102,15 @@ window.onload = function () {
                         let e = evaluatePrefix(myArrayy);
                         screenValue = call_button('cos', e);
                         screen.value = screenValue;
-                        history.push(`${exp} = ${screenValue}`);
+                        history_ans.push(`  =  ${screenValue}`)
+                        history.push(exp);
                     }
                     else {
                         let exp = screenValue;
                         screenValue = 'Invalid Expression'
                         screen.value = screenValue;
-                        history.push(`${exp} = ${screenValue}`);
+                        history_ans.push(`  =  ${screenValue}`)
+                        history.push(exp);
                         screen.value = 'Invalid Expression';
                     }
                 }
@@ -90,14 +124,16 @@ window.onload = function () {
                         let e = evaluatePrefix(myArrayy);
                         screenValue = call_button('tan', e);
                         screen.value = screenValue;
-                        history.push(`${exp} = ${screenValue}`);
+                        history_ans.push(`  =  ${screenValue}`)
+                        history.push(exp);
                         console.log(history)
                     }
                     else {
                         let exp = screenValue;
                         screenValue = 'Invalid Expression'
                         screen.value = screenValue;
-                        history.push(`${exp} = ${screenValue}`);
+                        history_ans.push(`  =  ${screenValue}`)
+                        history.push(exp);
                         screen.value = 'Invalid Expression';
                     }
                 }
@@ -111,13 +147,15 @@ window.onload = function () {
                         let e = evaluatePrefix(myArrayy);
                         screenValue = call_button('pow', e);
                         screen.value = screenValue;
-                        history.push(`${exp} = ${screenValue}`);
+                        history_ans.push(`  =  ${screenValue}`)
+                        history.push(exp);
                     }
                     else {
                         let exp = screenValue;
                         screenValue = 'Invalid Expression'
                         screen.value = screenValue;
-                        history.push(`${exp} = ${screenValue}`);
+                        history_ans.push(`  =  ${screenValue}`)
+                        history.push(exp);
                         screen.value = 'Invalid Expression';
                     }
                 }
@@ -131,13 +169,15 @@ window.onload = function () {
                     console.log(`evaluate prefix: ${e}`);
                     screenValue = e.toPrecision(4);
                     screen.value = screenValue;
-                    history.push(`${exp} = ${screenValue}`);
+                    history_ans.push(`  =  ${screenValue}`)
+                    history.push(exp);
                 }
                 else {
                     let exp = screenValue;
                     screenValue = 'Invalid Expression'
                     screen.value = screenValue;
-                    history.push(`${exp} = ${screenValue}`);
+                    history_ans.push(`  =  ${screenValue}`)
+                    history.push(exp);
                 }
             }
             else if (buttonText == "e") {
@@ -155,17 +195,18 @@ window.onload = function () {
             else if (buttonText == "History") showDiv()
             else if (buttonText == ",") {
                 var res = screenValue.charAt(screenValue.length - 1);
-                if (res == " ") {
+                res_num = screenValue.charAt(screenValue.length - 2);
+                console.log(`res: ${res} and res_num: ${res_num}`)
+                if (res == " " && operators.includes(res_num)) {
+                    screenValue = screenValue.slice(0, -3)
+                    screen.value = screenValue;
+                }
+                else if (res == " ") {
                     screenValue = screenValue.slice(0, -2)
                     screen.value = screenValue;
                 }
                 else {
                     screenValue = screenValue.slice(0, -1)
-                    res = screenValue.charAt(screenValue.length - 1);
-                    if (res == " ") {
-                        screenValue = screenValue.slice(0, -1)
-                        screen.value = screenValue;
-                    }
                     screen.value = screenValue;
                 }
             }
@@ -214,10 +255,7 @@ window.onload = function () {
 
 
     function infixToPrefix(infix) {
-        console.log(`in: ${infix}`)
-        // stack for operators.
         let operators = [];
-        // stack for operands.
         let operands = [];
         for (let i = 0; i < infix.length; i++) {
             if (infix[i] == '(') {
