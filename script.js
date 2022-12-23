@@ -10,6 +10,7 @@ window.onload = function () {
     let history = [];
     let history_ans = [];
     let firstNum = true;
+
     function showDiv() {
         const element = document.getElementById("welcomeDiv");
         var child = element.lastElementChild;
@@ -19,10 +20,12 @@ window.onload = function () {
         }
         for (let i = 0; i < history.length; i++) {
             const node = document.createElement("div");
+            // const element = document.createElement("div");
+            // const element_ans = document.createElement("div");
             node.style.border = "1px solid #666666";
             node.style.padding = "2px"
             node.style.borderRadius = "2px"
-            node.style.margin = "4px"
+            node.style.margin = "6px"
             const textnode = document.createTextNode(`${history[i]}`);
             const textnode_ans = document.createTextNode(` ${history_ans[i]}`);
             node.appendChild(textnode);
@@ -34,21 +37,22 @@ window.onload = function () {
     const buttonRow = document.querySelectorAll("button");
     let screen = document.getElementById("answer");
     let screenValue = "";
-    let last_element;
     let trigno = ['sin', 'cos', 'tan', '√']
     let operators = ["+", "-", "/", "*"];
 
     for (item of buttonRow) {
         item.addEventListener("click", (e) => {
             buttonText = e.target.innerText;
+            if (screenValue == "") firstNum = true;
             if (firstNum) {
-                if (buttonText === ".") {
+                if (buttonText == ".") {
                     screenValue = `0.`
                     screen.value = screenValue
                 }
-                else if (buttonText === "+" || buttonText === '-') {
+                else if (buttonText == "+" || buttonText == '-') {
                     screenValue = buttonText
                     screen.value = screenValue
+                    return
                 }
                 firstNum = false;
             }
@@ -171,6 +175,7 @@ window.onload = function () {
                     screen.value = screenValue;
                     history_ans.push(`  =  ${screenValue}`)
                     history.push(exp);
+
                 }
                 else {
                     let exp = screenValue;
@@ -225,6 +230,9 @@ window.onload = function () {
                     screen.value = screenValue;
                 }
                 else {
+                    let last_element = screenValue.slice(-2);
+                    if (operators.includes(last_element)) console.log(`last element: ${last_element}`);
+                    if (operators.includes(buttonText)) console.log(`element: ${buttonText}`);
                     screenValue += ` ${buttonText} `;
                     screen.value = screenValue;
                 }
@@ -303,10 +311,9 @@ window.onload = function () {
     // Javascript program to evaluate a prefix expression.
 
     function isOperand(c) {
-        if (c.charCodeAt() >= 48 && c.charCodeAt() <= 57)
-            return true;
-        else
-            return false;
+        let op = ['+', '-', '/', '*', '^']
+        if (op.includes(c)) return false
+        else return true;
     }
 
     function matchBrackets(s) {
@@ -362,15 +369,15 @@ window.onload = function () {
         let Stack = [];
         for (let j = exprsn.length - 1; j >= 0; j--) {
             if (isOperand(exprsn[j])) {
-                console.log(exprsn[j])
                 Stack.push((exprsn[j]));
             }
             else {
+                console.log('stack: ' + Stack[Stack.length - 1])
                 let o1 = Stack[Stack.length - 1];
                 Stack.pop();
                 let o2 = Stack[Stack.length - 1];
                 Stack.pop();
-                console.log(exprsn[j])
+                console.log(`o1: ${o1} and o2: ${o2}`)
                 switch (exprsn[j]) {
                     case '+':
                         Stack.push(parseInt(o1) + parseInt(o2));
@@ -386,7 +393,7 @@ window.onload = function () {
                         break;
                     case '^':
                         // console.log('here: ' + parseInt(o1) ^ parseInt(o2));
-                        Stack.push(parseInt(o1) / parseInt(o2));
+                        Stack.push(parseInt(o1) ** parseInt(o2));
                         break;
                 }
             }
